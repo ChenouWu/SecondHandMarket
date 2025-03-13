@@ -57,39 +57,42 @@ const signup = async (req, res) => {
 
 
 const login = async (req, res) => {
-    const {Email, Password} = req.body;
-  try{
-    const existingUser = await User.findOne({
-        Email
-    }); 
-    if(!existingUser){
-        return res.status(400).json({
-            message: "User does not exist"
-        });
-    }
+    console.log("🚀 Login request received:", req.body); // 这行代码应该能在日志里看到
 
-    const isPasswordCorrect = await bcrypt.compare(Password, existingUser.Password);
+    const { Email, Password } = req.body;
 
-    if(!isPasswordCorrect){
-        return res.status(400).json({
-            message: "Password Incorrect"
+    try {
+        const existingUser = await User.findOne({ Email });
+        console.log("🔍 User found:", existingUser); // 打印查找到的用户信息
+
+        if (!existingUser) {
+            return res.status(400).json({ message: "User does not exist" });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(Password, existingUser.Password);
+        console.log("🔑 Password match:", isPasswordCorrect); // 打印密码比对结果
+
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "Password Incorrect" });
+        }
+
+        generateToken(existingUser._id, res);
+        console.log("✅ Token generated successfully!");
+
+        return res.status(200).json({
+            message: "User logged in successfully",
+            _id: existingUser._id,
+            FullName: existingUser.FullName,
+            Email: existingUser.Email,
+            ProfilePic: existingUser.ProfilePic
         });
+
+    } catch (err) {
+        console.error("❌ Login error:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
     }
-    generateToken(existingUser._id,res);
-    
-    return res.status(200).json({
-        message: "User logged in successfully",
-        _id: existingUser._id,
-        FullName: existingUser.FullName,
-        Email: existingUser.Email,
-        ProfilePic: existingUser.ProfilePic
-    });
-  }catch(err){
-    return res.status(500).json({
-        message: "Internal Server Error"
-    });
-  }
-}   
+};
+
 
 const logout = async (req, res) => {
   try{
