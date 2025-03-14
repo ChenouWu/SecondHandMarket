@@ -13,7 +13,8 @@ const { server } = require('./src/lib/socket');
 
 
 app.use(cors({
-    origin: ["https://second-hand-market-tau.vercel.app", "https://secondhandmarket.onrender.com"], 
+
+    origin: ["https://second-hand-market-eight.vercel.app", "https://secondhandmarket.onrender.com"], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true  
@@ -51,5 +52,5 @@ mongoose.connect(process.env.MONGODB_URI)
         console.error("MongoDB connection error:", err);
     });
 
-// ✅ **导出 app**
+
 module.exports = app;

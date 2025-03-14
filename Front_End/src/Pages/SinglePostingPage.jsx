@@ -52,7 +52,7 @@
         try {
             const response = await axiosInstance.post(`/comments/comment/${id}`, { comment });
     
-            // ✅ 更新 UI，添加新评论
+            
             setPosting((prev) => ({
                 ...prev,
                 comments: [...prev.comments, response.data],
