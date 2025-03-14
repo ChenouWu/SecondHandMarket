@@ -103,7 +103,7 @@ export const useAuthStore = create((set,get) => ({
     },
     disconnectSocket: () => {
         get().socket?.disconnect();
-        set({ socket: null });  // 断开后记得清空
+        set({ socket: null }); 
     }
 }
 

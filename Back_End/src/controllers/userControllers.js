@@ -57,21 +57,17 @@ const signup = async (req, res) => {
 
 
 const login = async (req, res) => {
-    console.log("🚀 Login request received:", req.body); // 这行代码应该能在日志里看到
-
+    console.log("🚀 Login request received:", req.body); 
     const { Email, Password } = req.body;
 
     try {
         const existingUser = await User.findOne({ Email });
-        console.log("🔍 User found:", existingUser); // 打印查找到的用户信息
-
+      
         if (!existingUser) {
             return res.status(400).json({ message: "User does not exist" });
         }
 
         const isPasswordCorrect = await bcrypt.compare(Password, existingUser.Password);
-        console.log("🔑 Password match:", isPasswordCorrect); // 打印密码比对结果
-
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: "Password Incorrect" });
         }
