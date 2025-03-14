@@ -13,7 +13,7 @@ const { server } = require('./src/lib/socket');
 
 // ✅ **CORS 先配置**
 app.use(cors({
-    origin: ["https://second-hand-market-tau.vercel.app/login", "https://secondhandmarket.onrender.com"], 
+    origin: ["https://second-hand-market-tau.vercel.app", "https://secondhandmarket.onrender.com"], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true  // **允许前端发送 Cookie**
