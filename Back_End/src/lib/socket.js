@@ -6,8 +6,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: ["https://second-hand-market-eight.vercel.app", "https://secondhandmarket.onrender.com"],
-        methods: ["GET", "POST"],
+        origin: ["http://localhost:5173", "https://secondhandmarket.onrender.com"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }
 });

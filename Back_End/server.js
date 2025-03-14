@@ -5,11 +5,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { server } = require('./src/lib/socket');
+
 const app = express();
 
 
 app.use(cors({
-    origin: ["https://second-hand-market-eight.vercel.app", "https://secondhandmarket.onrender.com"], 
+    origin: ["http://localhost:5173", "https://secondhandmarket.onrender.com"], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true  
@@ -39,7 +40,8 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         console.log("Connected to MongoDB Successfully");
         const PORT = process.env.PORT || 5001;
-        server.listen(PORT, '0.0.0.0', () => {
+        const HTTP = '0.0.0.0';
+        server.listen(5001, HTTP, () => {
             console.log(`Server is running on port${PORT}` );
         });
     })
