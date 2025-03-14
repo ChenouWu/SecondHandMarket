@@ -24,12 +24,6 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
-res.cookie("jwt", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",  // 生产环境才启用 secure
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-});
-
 // ✅ **路由**
 const authRoutes = require('./src/Routes/authRoutes');
 const messageRoutes = require('./src/Routes/messageRoutes');
