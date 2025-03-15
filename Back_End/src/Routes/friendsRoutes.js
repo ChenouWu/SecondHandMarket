@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // 获取好友列表
-router.get("/getfriends", protectRoute, getFriends);
+router.get("/getFriends", protectRoute, getFriends);
 
 // 添加好友
 router.post("/add", protectRoute, addFriend);
