@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import toast from 'react-hot-toast';
 import axiosInstance from '../libs/axios';
 import { useAuthStore } from './useAuthStore';
-
+import axios from axios;
 export const useChatStore = create((set,get) => ({
     messages: [],
     users: [],
@@ -14,7 +14,7 @@ export const useChatStore = create((set,get) => ({
     getUsers: async () => {
         set({ isUsersLoading: true });
         try {
-          const res = await axiosInstance.get("/friend/getfriends");
+          const res = await axios.get("https://secondhandmarket.onrender.com/api/friend/getfriends");
           set({ users: res.data.friends || []});
         } catch (error) {
           toast.error(error.response.data.message);
