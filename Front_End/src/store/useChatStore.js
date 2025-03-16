@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import toast from 'react-hot-toast';
 import axiosInstance from '../libs/axios';
 import { useAuthStore } from './useAuthStore';
-
+import axios from 'axios';
 export const useChatStore = create((set,get) => ({
     messages: [],
     users: [],
@@ -14,10 +14,11 @@ export const useChatStore = create((set,get) => ({
     getUsers: async () => {
         set({ isUsersLoading: true });
         try {
-          const res = await axiosInstance.get("/friend/getfriends");
+          const res = await axiosInstance.get('friend/getFriends');
+          console.log(res)
           set({ users: res.data.friends || []});
         } catch (error) {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data);
         } finally {
           set({ isUsersLoading: false });
         }
@@ -27,8 +28,9 @@ export const useChatStore = create((set,get) => ({
         set({isMessageLoading:true});
 
         try{
-            const res = await axiosInstance.get(`/message/${userId}`);
+            const res = await axiosInstance.get(`message/${userId}`);
             set({messages: res.data });
+
         }catch(err){
             console.error('Get Message Error:', err.response?.data || err.messages);
             toast.error(err.response?.data?.messages || 'Get Message failed');

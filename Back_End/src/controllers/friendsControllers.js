@@ -42,14 +42,24 @@ const addFriend = async (req, res) => {
 };
 
 const getFriends = async (req, res) => {
+    // ✅ 先检查 req.user 是否存在
+    if (!req.user || !req.user._id) {
+        return res.status(401).json({ message: "Unauthorized - No user found in request." });
+    }
+
     const userId = req.user._id;
 
     try {
         const user = await User.findById(userId).populate('Friends', 'FullName ProfilePic Email');
 
+        // ✅ 这里检查 user 是否为空
+        if (!user) {
+            return res.status(404).json({ message: "User not found-friendControllers" }); // 👈 这里返回错误
+        }
+
         res.status(200).json({
             message: "Friends list retrieved successfully.",
-            friends: user.Friends
+            friends: user.Friends || [] // 确保 friends 不为空
         });
 
     } catch (err) {

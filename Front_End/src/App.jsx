@@ -41,10 +41,10 @@ function App() {
       <Routes>
         <Route path="/posting" element ={<Posting/>}/>
         <Route path="/posting/:id" element={<SinglePostingPage />} />
-        <Route path="/HomePage" element={<HomePage/>}/> // message
+        <Route path="/HomePage" element={<HomePage/>}/> // MessagePage
         <Route path="/" element={authUser ? <Landing /> : <Navigate to="/login" />} />
-        <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/HomePage" />} /> // message
-        <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/HomePage" />} /> // message
+        <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} /> 
+        <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/settings" element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
         <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path="/add-friend" element={<AddFriends />} />

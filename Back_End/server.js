@@ -59,15 +59,15 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
 // Routes
-const authRoutes = require('./src/Routes/authRoutes');
-const messageRoutes = require('./src/Routes/messageRoutes');
-const friendsRoutes = require('./src/Routes/friendsRoutes');
+const AuthRoutes = require('./src/Routes/authRoutes');
+const MessageRoutes = require('./src/Routes/messageRoutes');
+const FriendsRoutes = require('./src/Routes/friendsRoutes');
 const PostingRoutes = require('./src/Routes/PostingRoutes');
 const CommentRoutes = require('./src/Routes/commentsRoutes');
 
-app.use('/api/auth', authRoutes);
-app.use('/api/message', messageRoutes);
-app.use('/api/friend', friendsRoutes);
+app.use('/api/auth', AuthRoutes);
+app.use('/api/message', MessageRoutes);
+app.use('/api/friend', FriendsRoutes);
 app.use('/api/posting', PostingRoutes);
 app.use('/api/comments', CommentRoutes);
 

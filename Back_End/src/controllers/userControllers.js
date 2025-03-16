@@ -146,7 +146,7 @@ const updateProfile = async (req, res) => {
 };
 
 const checkAuth = async (req, res) => {
-    try{
+try{
         res.status(200).json(req.user);
 }catch(err){
     return res.status(500).json({

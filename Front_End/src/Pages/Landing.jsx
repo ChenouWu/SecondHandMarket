@@ -1,14 +1,17 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import { ArrowRight } from "lucide-react"
 import axiosInstance from "../libs/axios"
 import { useNavigate } from "react-router-dom"
-import SinglePostingPage from "./SinglePostingPage"
+
 const categories = ["For Sale", "Looking For", "Ride Share", "Friendship", "Others"]
+
 function Landing() {
   const [posts, setPosts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -31,22 +34,28 @@ function Landing() {
   }
 
   return (
-    <div className="min-h-screen bg-base-100 pt-21">
-      {/* Hero Section */}
-      <section className="bg-primary text-primary-content">
-        <div className="container mx-auto px-4 py-16 flex flex-col lg:flex-row items-center justify-between">
-          <div className="lg:w-1/2 mb-8 lg:mb-0">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to SecondChance Market</h1>
-            <p className="text-xl mb-6">
-              Discover amazing deals on pre-loved items or find a new home for your treasures.
-            </p>
-            <button className="btn btn-secondary btn-lg">
-              Start Exploring
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </button>
-          </div>
-          <div className="lg:w-1/2">
-            <img src="/hero-image.jpg" alt="SecondChance Market" className="rounded-lg shadow-2xl max-w-full h-auto" />
+    <div className="min-h-screen bg-base-100 pt-16">
+      {/* Hero Section - Redesigned with texture */}
+      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 py-16 relative overflow-hidden shadow-lg">
+        {/* Texture overlay */}
+        <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2256%22%20height%3D%2256%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M8%2016l8%208%208-8-8-8-8%208zm40%2024l8%208%208-8-8-8-8%208zM8%2048l8%208%208-8-8-8-8%208zm40-40l8%208%208-8-8-8-8%208z%22%2F%3E%3C%2Fsvg%3E')]"></div>
+
+        {/* Content with subtle depth */}
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between">
+            <div className="lg:w-1/2 mb-8 lg:mb-0">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white drop-shadow-sm">
+                Welcome to SecondChance Market
+              </h1>
+              <p className="text-xl mb-8 text-white/90 max-w-lg">
+                Discover amazing deals on pre-loved items or find a new home for your treasures.
+              </p>
+              <button className="btn bg-white text-indigo-700 hover:bg-white/90 border-none px-6 py-3 rounded-lg font-semibold shadow-md">
+                Start Exploring
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </button>
+            </div>
+            <div className="lg:w-1/2 flex justify-center"></div>
           </div>
         </div>
       </section>
@@ -105,7 +114,9 @@ function Landing() {
                       </div>
                     </div>
                     <div className="card-actions justify-end mt-4">
-                      <button className="btn btn-primary btn-sm" onClick={()=>{handleViewDetails(post._id)}}>View Details</button>
+                      <button className="btn btn-primary btn-sm" onClick={() => handleViewDetails(post._id)}>
+                        View Details
+                      </button>
                     </div>
                   </div>
                 </div>

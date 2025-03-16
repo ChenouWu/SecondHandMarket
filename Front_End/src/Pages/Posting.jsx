@@ -1,24 +1,23 @@
+"use client"
+
 import { useState } from "react"
-import { Upload, X } from "lucide-react"
-import axiosInstance from "../libs/axios";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-const categories = ["For Sale", "Looking For", "Ride Share", "Friendship", "Others"]
+import { ArrowUpFromLine } from "lucide-react"
+import axiosInstance from "../libs/axios"
+import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 function Posting() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     contactInfo: "",
-    category: "Others",
-  });
-
+    category: "Others", // Keeping default category but not showing in UI
+  })
   const [images, setImages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  let isPosted = false;
-
   const navigate = useNavigate()
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({
@@ -28,17 +27,15 @@ function Posting() {
   }
 
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    files.forEach(file => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            setImages(prev => [...prev, reader.result]);
-        }
-    });
-}
-
-
+    const files = Array.from(e.target.files)
+    files.forEach((file) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        setImages((prev) => [...prev, reader.result])
+      }
+    })
+  }
 
   const removeImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index))
@@ -55,26 +52,21 @@ function Posting() {
         images,
       })
       toast.success(response.data.message)
-      isPosted = true;
-      navigate("/Landing"); 
-      // Reset form or redirect user after successful submission
+      navigate("/Landing")
     } catch (err) {
       setError("Failed to create posting. Please try again.")
       console.error("Error creating posting:", err)
     } finally {
       setIsLoading(false)
     }
-    if(isPosted){
-
-    }
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 pt-20">
-      <h1 className="text-2xl font-bold mb-10">Create a New Posting</h1>
+    <div className="max-w-3xl mx-auto px-4 py-8 pt-24">
+      <h1 className="text-3xl font-bold mb-8 text-gray-800">Create a New Posting</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium mb-2">
+          <label htmlFor="title" className="block text-sm font-medium mb-2 text-gray-700">
             Title
           </label>
           <input
@@ -84,12 +76,12 @@ function Posting() {
             value={formData.title}
             onChange={handleChange}
             required
-            className="input input-bordered w-full"
+            className="w-full px-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium mb-2">
+          <label htmlFor="description" className="block text-sm font-medium mb-2 text-gray-700">
             Description
           </label>
           <textarea
@@ -98,13 +90,13 @@ function Posting() {
             value={formData.description}
             onChange={handleChange}
             required
-            rows="4"
-            className="textarea textarea-bordered w-full"
+            rows="6"
+            className="w-full px-4 py-3 rounded-3xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           ></textarea>
         </div>
 
         <div>
-          <label htmlFor="contactInfo" className="block text-sm font-medium mb-2">
+          <label htmlFor="contactInfo" className="block text-sm font-medium mb-2 text-gray-700">
             Contact Information
           </label>
           <input
@@ -114,41 +106,26 @@ function Posting() {
             value={formData.contactInfo}
             onChange={handleChange}
             required
-            className="input input-bordered w-full"
+            className="w-full px-4 py-3 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </div>
 
         <div>
-          <label htmlFor="category" className="block text-sm font-medium mb-2">
-            Category
-          </label>
-          <select
-            id="category"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="select select-bordered w-full"
-          >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2">Images</label>
+          <label className="block text-sm font-medium mb-2 text-gray-700">Images</label>
           <div className="flex items-center space-x-4">
-            <label className="btn btn-outline">
-              <Upload className="w-4 h-4 mr-2" />
+            <label
+              htmlFor="image-upload"
+              className="flex items-center px-4 py-2 border border-gray-300 rounded-full text-gray-700 hover:bg-gray-50 cursor-pointer"
+            >
+              <ArrowUpFromLine className="w-4 h-4 mr-2" />
               Upload Images
-              <input 
-              type="file" 
-              multiple 
-              accept="image/*" 
-              onChange={(e) => handleImageUpload(e)} 
-              className="hidden" 
+              <input
+                id="image-upload"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
               />
             </label>
             <span className="text-sm text-gray-500">{images.length} image(s) selected</span>
@@ -160,14 +137,20 @@ function Posting() {
                   <img
                     src={image || "/placeholder.svg"}
                     alt={`Uploaded ${index + 1}`}
-                    className="w-24 h-24 object-cover rounded"
+                    className="w-24 h-24 object-cover rounded-lg"
                   />
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
                   >
-                    <X className="w-4 h-4" />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path
+                        fillRule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
                   </button>
                 </div>
               ))}
@@ -176,26 +159,17 @@ function Posting() {
         </div>
 
         {error && (
-          <div className="alert alert-error">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="stroke-current shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+          <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg">
             <span>{error}</span>
           </div>
         )}
 
-        <button type="submit" className={`btn btn-primary w-full ${isLoading ? "loading" : ""}`} disabled={isLoading}>
-          {isLoading ? "Creating..." : "Create Posting"}
+        <button
+          type="submit"
+          className="w-full py-4 bg-teal-500 text-white rounded-full hover:bg-teal-600 transition-colors focus:outline-none"
+          disabled={isLoading}
+        >
+          Create Posting
         </button>
       </form>
     </div>
