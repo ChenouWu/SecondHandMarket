@@ -18,7 +18,6 @@ export const useAuthStore = create((set,get) => ({
         try{
             const res = await axios.get("https://secondhandmarket.onrender.com/api/auth/check");
             set({authUser:res.data});
-            console.log(authUser)
             get().connectSocket();
         }catch(err){
             console.log(err);
