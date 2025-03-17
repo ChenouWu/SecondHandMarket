@@ -24,13 +24,13 @@ const createComment = async (req, res) => {
     
 
         if (!post.comments) {
-            post.comments = [];  // ✅ 确保 comments 存在
+            post.comments = [];  
         }
 
         post.comments.push(newComment);
         await post.save();
 
-        // **填充 `userId` 让前端拿到完整的用户信息**
+   
         const populatedComment = await Posting.findById(postId).populate('comments.userId', 'FullName ProfilePic');
 
         res.status(201).json(populatedComment.comments[populatedComment.comments.length - 1]);
