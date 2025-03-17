@@ -10,7 +10,6 @@ const createPost = async (req, res) => {
     }
 
     try {
-        // ✅ 遍历images，每个都上传到Cloudinary
         const imageUrls = [];
         if (images && images.length > 0) {
             for (const base64Image of images) {
