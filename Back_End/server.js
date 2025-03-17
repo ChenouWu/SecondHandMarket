@@ -15,7 +15,7 @@ const server = http.createServer(app);
 // Set up Socket.io
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173", "https://secondhandmarket.onrender.com"],
+        origin: ["https://halifax-housing-second-hand.vercel.app", "https://secondhandmarket.onrender.com"],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 
 // Express middleware
 app.use(cors({
-    origin: ["http://localhost:5173", "https://secondhandmarket.onrender.com"], 
+    origin: ["https://halifax-housing-second-hand.vercel.app", "https://secondhandmarket.onrender.com"], 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true  
